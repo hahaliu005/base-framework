@@ -7,6 +7,6 @@ class IndexController extends PortalController
 {
     public function index()
     {
-        echo 'hello world';
+        return view('index');
     }
 }

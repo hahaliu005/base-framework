@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\View\FileViewFinder;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -36,10 +37,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-
-        $this->mapApiRoutes();
-
-        //
+        $this->setViewFinder();
     }
 
     /**
@@ -51,29 +49,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
+        $platform = getPlatform();
         Route::group([
             'middleware' => 'web',
             'namespace' => $this->namespace,
-        ], function ($router) {
-            require base_path('routes/web.php');
+        ], function ($router) use ($platform) {
+            require base_path('routes/web_' . $platform . '.php');
         });
     }
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes()
+    protected function setViewFinder()
     {
-        Route::group([
-            'middleware' => 'api',
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
-        ], function ($router) {
-            require base_path('routes/api.php');
-        });
+        $viewPath = resource_path(getPlatform() . '/views');
+
+        $finder = new FileViewFinder(app()['files'], [$viewPath, realpath(base_path('resources/views'))]);
+        \View::setFinder($finder);
     }
+
 }

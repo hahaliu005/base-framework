@@ -2,21 +2,21 @@ const elixir = require('laravel-elixir');
 
 require('laravel-elixir-vue');
 
-/*
- |--------------------------------------------------------------------------
- | Elixir Asset Management
- |--------------------------------------------------------------------------
- |
- | Elixir provides a clean, fluent API for defining some basic Gulp tasks
- | for your Laravel application. By default, we are compiling the Sass
- | file for our application, as well as publishing vendor resources.
- |
- */
+var fs = require('fs');
+var ini = require('ini');
+var config = ini.parse(fs.readFileSync('./common.ini', 'utf-8'), true);
+var service = config.base.service;
 
 elixir(function (mix) {
-    mix.less('**/*.less');
+    var lessDir = './resources/' + service + '/assets/less/';
+    var files = fs.readdirSync(lessDir);
+    for (var i = 0; i < files.length; i++) {
+        mix.less(lessDir + files[i], './public/css/' + files[i].replace(/less$/, 'css'))
+    }
 });
 
-elixir(function (mix) {
-    mix.webpack('**/*.js')
-})
+
+
+//elixir(function (mix) {
+//    mix.webpack('**/*.js')
+//})
