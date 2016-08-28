@@ -34,3 +34,9 @@ function getPlatform()
     }
     return $platform;
 }
+
+function appElixir($dir)
+{
+    return elixir($dir);
+}
+
