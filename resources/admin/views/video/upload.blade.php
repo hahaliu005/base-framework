@@ -31,9 +31,13 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
             url: '{{route('video.uploading')}}',
-            FileUploaded: function (up, file, response) {
+            init: {
+                FileUploaded: function (up, file, response) {
+                    var ret = JSON.parse(response.response);
+                    alert(ret);
+                    console.log(ret);
+                }
             }
-
         });
 
         uploader.init();
