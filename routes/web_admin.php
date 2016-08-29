@@ -14,3 +14,18 @@
 Route::get('/', [
     'uses' => 'Admin\IndexController@index'
 ]);
+
+Route::group(['namespace' => 'Admin'], function() {
+    Route::get('/video/upload', [
+        'as' => 'video.getUpload',
+        'uses' => 'VideoController@getUpload'
+    ]);
+    Route::post('/video/uploading', [
+        'as' => 'video.uploading',
+        'uses' => 'VideoController@uploading'
+    ]);
+    Route::post('/video/upload', [
+        'as' => 'video.postUpload',
+        'uses' => 'VideoController@postUpload'
+    ]);
+});

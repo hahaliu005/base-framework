@@ -1,7 +1,6 @@
 @extends('layouts.master')
-
 @section('content')
-    Welcome
+    video upload
 @endsection
 
 @section('footer')
