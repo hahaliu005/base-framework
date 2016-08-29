@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', [
-    'uses' => 'Admin\IndexController@index'
-]);
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function() {
+    Route::get('/', [
+        'uses' => 'IndexController@index'
+    ]);
 
-Route::group(['namespace' => 'Admin'], function() {
     Route::get('/video/upload', [
         'as' => 'video.getUpload',
         'uses' => 'VideoController@getUpload'
@@ -29,3 +29,15 @@ Route::group(['namespace' => 'Admin'], function() {
         'uses' => 'VideoController@postUpload'
     ]);
 });
+
+/**
+ * About Auth
+ */
+Route::get('/login', 'Admin\LoginController@showLoginForm');
+Route::post('/login', 'Admin\LoginController@login');
+Route::get('/logout', [
+    'as' => 'logout',
+    'uses' => 'Admin\LoginController@logout',
+]);
+Route::get('/register', 'Admin\RegisterController@showRegistrationForm');
+Route::post('/register', 'Admin\RegisterController@register');

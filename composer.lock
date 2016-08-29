@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ed9df8b872992035f068a7fe461a635a",
-    "content-hash": "76036da3b5b55b91dbe1e1affa01bf9e",
+    "hash": "8942a5ba61eab9b1f954be751a74ed80",
+    "content-hash": "4835d34c470101f403df80bb0ca10d50",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -247,6 +247,47 @@
                 }
             ],
             "time": "2015-04-20 18:58:01"
+        },
+        {
+            "name": "jenky/laravel-plupload",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jenky/laravel-plupload.git",
+                "reference": "9a9744a491bc8ec0d44f5f4b8c3fc1df00e4886b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jenky/laravel-plupload/zipball/9a9744a491bc8ec0d44f5f4b8c3fc1df00e4886b",
+                "reference": "9a9744a491bc8ec0d44f5f4b8c3fc1df00e4886b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.0",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jenky\\LaravelPlupload\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Linh Tran",
+                    "email": "jenky.w0w@gmail.com"
+                }
+            ],
+            "description": "Plupload package for Laravel 5.0",
+            "keywords": [
+                "laravel",
+                "plupload"
+            ],
+            "time": "2016-04-05 02:41:15"
         },
         {
             "name": "jeremeamia/SuperClosure",

@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
 
-    <title>Dashboard Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="{{appElixir('css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{appElixir('css/bootstrap-theme.min.css')}}" rel="stylesheet" />
-
-    <!-- Custom styles for this template -->
-    <link href="{{appElixir('css/index.css')}}" rel="stylesheet">
-</head>
+@include('vendor.header')
 
 <body>
 
@@ -33,14 +16,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Help</a></li>
+                <li><a href="#">{{\Auth::user()->name}}</a></li>
+                <li><a href="{{route('logout')}}">Logout</a></li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
         </div>
     </div>
 </nav>
@@ -57,7 +35,7 @@
                     </div>
                     <div id="collapse1" class="panel-collapse collapse">
                         <ul class="list-group">
-                            <a href="{{route('video.upload')}}"><li class="list-group-item active">Upload Video</li></a>
+                            <a href="{{route('video.getUpload')}}"><li class="list-group-item active">Upload Video</li></a>
                             <li class="list-group-item">Two</li>
                             <li class="list-group-item">Three</li>
                         </ul>
@@ -135,11 +113,7 @@
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="{{appElixir('js/jquery.min.js')}}"></script>
-<script src="{{appElixir('js/bootstrap.min.js')}}"></script>
+@include('vendor.footer')
 @yield('footer')
 </body>
 </html>
