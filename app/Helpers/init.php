@@ -7,6 +7,7 @@
 
 const APP_SERVICE_ADMIN = 'admin';
 const APP_SERVICE_PORTAL = 'portal';
+const APP_SERVIDE_TRANS = 'transcoder';
 
 function getBaseDir()
 {
@@ -39,4 +40,3 @@ function appElixir($dir)
 {
     return elixir($dir);
 }
-
