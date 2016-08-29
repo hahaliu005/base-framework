@@ -2,6 +2,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminController;
+use App\Video;
+use Illuminate\Http\Request;
 
 class VideoController extends AdminController
 {
@@ -10,31 +12,27 @@ class VideoController extends AdminController
         return view('video.upload');
     }
 
-    public function postUpload()
+    public function postUpload(Request $request)
     {
-
+        dd($request->input());
     }
 
     public function uploading()
     {
-        return \Plupload::file('file', function($file) {
-            // Store the uploaded file
-            $file->move(storage_path('upload/images'), $file->getClientOriginalName());
+        return \Plupload::file('file', function ($file) {
+            $file_name = Video::genFileName();
 
-            // Save the record to the db
-            //$photo = \App\Photo::create([
-            //    'name' => $file->getClientOriginalName(),
-            //    'type' => 'image',
-            //    //...
-            //]);
+            $created_at = \Carbon\Carbon::now();
 
-            // This will be included in JSON response result
+            $file->move(Video::tempDir($created_at), $file_name);
+            $video = Video::create([
+                'status' => Video::STATUS_UPLOADING,
+                'file_name' => $file_name,
+                'created_at' => $created_at,
+            ]);
+
             return [
-                'success'   => true,
-                'message'   => 'Upload successful.',
-            //    'id'        => $photo->id,
-                // 'url'       => $photo->getImageUrl($filename, 'medium'),
-                // 'deleteUrl' => action('MediaController@deleteDelete', [$photo->id])
+                'id' => $video->id
             ];
         });
     }

@@ -1,15 +1,26 @@
 @extends('layouts.master')
 @section('content')
-    <ul id="filelist"></ul>
-    <br />
+    <form action="{{route('video.postUpload')}}" method="post">
+        {{csrf_field()}}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" name="description" placeholder="Description">
+        </div>
+        <ul id="filelist"></ul>
+        <br />
 
-    <div id="container">
-        <a id="browse" href="javascript:;">[Browse...]</a>
-        <a id="start-upload" href="javascript:;">[Start Upload]</a>
-    </div>
-
-    <br />
-    <pre id="console"></pre>
+        <div class="form-group">
+                <a id="browse" href="javascript:;">[Browse...]</a>
+                <a id="start-upload" href="javascript:;">[Start Upload]</a>
+        </div>
+        <br />
+        <pre id="console"></pre>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
 @endsection
 @section('footer')
     <script src="{{appElixir('plupload/js/plupload.full.min.js')}}"></script>
@@ -19,7 +30,10 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
-            url: '{{route('video.uploading')}}'
+            url: '{{route('video.uploading')}}',
+            FileUploaded: function (up, file, response) {
+            }
+
         });
 
         uploader.init();

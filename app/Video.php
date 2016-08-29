@@ -36,4 +36,57 @@ class Video extends AppModel
 
     // 视频转码失败
     const STATUS_CONVERT_FAILED = 10;
+
+    public static function genFileName(){
+        return str_random(20);
+    }
+
+    public static function storeDir(){
+        return storage_path().'/data/';
+    }
+
+    /**
+     * 临时上传的视频文件路径
+     * @param $date
+     * @return string
+     */
+    public static function tempDir($date){
+        return self::storeDir().'video/tmp/' . self::dateFormat($date) . '/';
+    }
+
+    /**
+     * 上传后点击提交,视频文件转移至此路径
+     * @param $date
+     * @return string
+     */
+    public static function originDir($date){
+        return self::storeDir().'video/origin/' . self::dateFormat($date) . '/';
+    }
+
+    /**
+     * 处理后的文件在此路径下
+     * @param $date
+     * @return string
+     */
+    public static function releaseDir($date){
+        return self::storeDir().'video/released/' . self::dateFormat($date) . '/';
+    }
+
+    /**
+     * 截屏的文件路径
+     * @param $date
+     * @return string
+     */
+    public static function thumbDir($date)
+    {
+        return self::storeDir().'image/thumb/' . self::dateFormat($date) . '/';
+    }
+
+    public static function dateFormat($date)
+    {
+        if (! ($date instanceof \Carbon\Carbon)) {
+            $date = new \Carbon\Carbon($date);
+        }
+        return $date->format('Y-m-d');
+    }
 }
