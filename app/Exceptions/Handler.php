@@ -2,12 +2,15 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\Traits\ResponseTrait;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
+    use ResponseTrait;
     /**
      * A list of the exception types that should not be reported.
      *
@@ -44,6 +47,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+       // if ($exception instanceof validationexception) {
+       //     return $this->ajaxResponse(false, [$exception->validator->errors()->getMessages()]);
+        //}
         return parent::render($request, $exception);
     }
 

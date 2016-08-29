@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'chunk_path' => storage_path('plupload'),
+    'chunk_path' => storage_path('data/video/chunks'),
 
     /*
     |--------------------------------------------------------------------------
