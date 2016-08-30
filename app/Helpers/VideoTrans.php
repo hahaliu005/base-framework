@@ -50,7 +50,7 @@ class VideoTrans
             return false;
         }
 
-        $inputFile = Video::originDir($videoModel->created_at) . basename($videoModel->video_path);
+        $inputFile = Video::originDir($videoModel->created_at) . basename($videoModel->file_name);
         $convertDir = Video::releaseDir($videoModel->created_at);
         $shotDir = Video::thumbDir($videoModel->created_at);
 
@@ -277,9 +277,9 @@ class VideoTrans
 
     public static function getVideoSize($name)
     {
-        $command = "du -k $name";
+        $command = "du -k $name | awk '{print $1}'";
         exec($command, $output);
-        $videoSize = $output[0];
+        $videoSize = (int) $output[0];
         return $videoSize;
     }
 

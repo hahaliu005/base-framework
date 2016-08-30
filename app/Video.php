@@ -35,6 +35,10 @@ class Video extends AppModel
     const VIDEO_ORIGIN_THUMB_SUFFIX = '_origin_thumb_';
     const VIDEO_THUMB_EXTENSION = '.jpg';
 
+    const VIDEO_ND_SUFFIX = '_ND.mp4';
+    const VIDEO_HD_SUFFIX = '_HD.mp4';
+    const VIDEO_SD_SUFFIX = '_SD.mp4';
+
     // 想要生成的截图数量
     const VIDEO_THUMB_COUNT = 8;
 
