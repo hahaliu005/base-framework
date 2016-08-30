@@ -26,10 +26,16 @@
     <script type="text/javascript">
         var uploader = new plupload.Uploader({
             browse_button: 'browse', // this can be an id of a DOM element or the DOM element itself
+            runtimes: 'flash',
+            // Flash settings
+            flash_swf_url: '/plupload/js/Moxie.swf',
+            // Silverlight settings
+            silverlight_xap_url: '/plupload/js/Moxie.xap',
+
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
             },
-            url: '{{route('video.uploading')}}',
+            url: '{{$uploadUrl}}',
             init: {
 
                 FileUploaded: function (up, file, response) {

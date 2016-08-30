@@ -10,7 +10,9 @@ class VideoController extends AdminController
 {
     public function getUpload()
     {
-        return view('video.upload');
+        return view('video.upload', [
+            'uploadUrl' => $this->getUploadUrl(),
+        ]);
     }
 
     public function postUpload(Request $request)
@@ -72,5 +74,15 @@ class VideoController extends AdminController
                 'file_name' => $video->file_name,
             ];
         });
+    }
+
+    private function getUploadUrl()
+    {
+        return
+            'http://' .
+            env('UPLOAD_HOST', '127.0.0.1') .
+            ':' .
+            env('UPLOAD_PORT', '1081') .
+            '/video/uploading';
     }
 }
