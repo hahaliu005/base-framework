@@ -54,35 +54,4 @@ class VideoController extends AdminController
 
         return $this->ajaxResponse(true);
     }
-
-    public function uploading()
-    {
-        return \Plupload::file('file', function ($file) {
-            $file_name = Video::genFileName();
-
-            $created_at = \Carbon\Carbon::now();
-
-            $file->move(Video::tempDir($created_at), $file_name);
-            $video = Video::create([
-                'status' => Video::STATUS_UPLOADING,
-                'file_name' => $file_name,
-                'created_at' => $created_at,
-            ]);
-
-            return [
-                'video_id' => $video->id,
-                'file_name' => $video->file_name,
-            ];
-        });
-    }
-
-    private function getUploadUrl()
-    {
-        return
-            'http://' .
-            env('UPLOAD_HOST', '127.0.0.1') .
-            ':' .
-            env('UPLOAD_PORT', '1081') .
-            '/video/uploading';
-    }
 }
