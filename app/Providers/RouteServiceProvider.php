@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapWebRoutes();
+        $this->mapRoutes();
         $this->setViewFinder();
     }
 
@@ -47,15 +47,24 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapRoutes()
     {
         $platform = getPlatform();
-        Route::group([
-            'middleware' => 'web',
-            'namespace' => $this->namespace,
-        ], function ($router) use ($platform) {
-            require base_path('routes/web_' . $platform . '.php');
-        });
+        if (in_array($platform, [APP_SERVICE_ADMIN, APP_SERVICE_PORTAL])) {
+            Route::group([
+                'middleware' => 'web',
+                'namespace' => $this->namespace,
+            ], function ($router) use ($platform) {
+                require base_path('routes/web_' . $platform . '.php');
+            });
+        } else {
+            Route::group([
+                'middleware' => 'api',
+                'namespace' => $this->namespace,
+            ], function ($router) use ($platform) {
+                require base_path('routes/api_' . $platform . '.php');
+            });
+        }
     }
 
     protected function setViewFinder()
