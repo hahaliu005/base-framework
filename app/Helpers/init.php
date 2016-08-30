@@ -9,6 +9,9 @@ const APP_SERVICE_ADMIN = 'admin';
 const APP_SERVICE_PORTAL = 'portal';
 const APP_SERVIDE_TRANS = 'transcoder';
 
+const QUEUE_VIDEO_CHECK = 'video_check';
+const QUEUE_VIDEO_TRANS = 'video_trans';
+
 function getBaseDir()
 {
     static $baseDir;

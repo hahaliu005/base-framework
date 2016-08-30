@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\AdminController;
+use App\Jobs\VideoTrans;
 use App\Video;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,6 @@ class VideoController extends AdminController
             'video_id' => 'required|numeric',
             'file_name' => 'required',
         ]);
-        return ['aa'];
         $inputs = $request->input();
         $videoId = $inputs['video_id'];
         $fileName = $inputs['file_name'];
@@ -35,10 +35,20 @@ class VideoController extends AdminController
         $attrs = [
             'title' => $inputs['title'],
             'description' => $inputs['description'],
-            'status' => Video::STATUS_UPLOADED,
+            'status' => Video::STATUS_VERIFIED,
             'user_id' => \Auth::user()->id,
         ];
+
+        // move file and update video path
+        $origin_dir = Video::originDir($video->created_at);
+        if (!is_dir($origin_dir)) {
+            mkdir($origin_dir, 0755, true);
+        }
+        \File::move(Video::tempDir($video->created_at) . $fileName, Video::originDir($video->created_at) . $fileName);
+
         $video->update($attrs);
+
+        $this->dispatch((new VideoTrans($video->id))->onQueue(QUEUE_VIDEO_TRANS));
 
         return $this->ajaxResponse(true);
     }

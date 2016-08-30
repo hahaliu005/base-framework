@@ -3,11 +3,6 @@
     <form id="upload-form" action="{{route('video.postUpload')}}" method="post">
         {{csrf_field()}}
         <div class="form-group">
-            @if ($errors->has('title'))
-                <span class="help-block">
-                                            <strong>{{ $errors->first('title') }}</strong>
-                                        </span>
-            @endif
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Title">
         </div>
