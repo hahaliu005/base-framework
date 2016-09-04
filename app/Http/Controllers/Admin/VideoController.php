@@ -54,4 +54,39 @@ class VideoController extends AdminController
 
         return $this->ajaxResponse(true);
     }
+
+    public function list()
+    {
+        $videos = (new Video())->paginate(15);
+        return view('video.list', [
+            'videos' => $videos,
+        ]);
+    }
+
+    /**
+     * publish the video
+     * @param
+     */
+    public function publish(Request $request)
+    {
+        $videoId = $request->input('id');
+        if (! $video = Video::where('id', $videoId)->
+            where('status', Video::STATUS_PROCESSED)->first()
+        ) {
+            return $this->ajaxResponse(false, 'Can not find video');
+        }
+        $video->update([
+            'status' => Video::STATUS_PUBLISHED,
+        ]);
+        return $this->ajaxResponse(true);
+    }
+
+    private function getUploadUrl()
+    {
+        return 'http://' .
+        env('UPLOAD_HOST', '127.0.0.1') .
+        ':' .
+        env('UPLOAD_PORT', '8081') .
+        '/video/uploading';
+    }
 }

@@ -37,7 +37,6 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapRoutes();
-        $this->setViewFinder();
     }
 
     /**
@@ -49,30 +48,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapRoutes()
     {
-        $platform = getPlatform();
-        if (in_array($platform, [APP_SERVICE_ADMIN, APP_SERVICE_PORTAL])) {
+        $service = getService();
+        if (in_array($service, [APP_SERVICE_ADMIN, APP_SERVICE_PORTAL])) {
             Route::group([
                 'middleware' => 'web',
                 'namespace' => $this->namespace,
-            ], function ($router) use ($platform) {
-                require base_path('routes/web_' . $platform . '.php');
+            ], function ($router) use ($service) {
+                require base_path('routes/web_' . $service . '.php');
             });
         } else {
             Route::group([
                 'middleware' => 'api',
                 'namespace' => $this->namespace,
-            ], function ($router) use ($platform) {
-                require base_path('routes/api_' . $platform . '.php');
+            ], function ($router) use ($service) {
+                require base_path('routes/api_' . $service . '.php');
             });
         }
     }
-
-    protected function setViewFinder()
-    {
-        $viewPath = resource_path(getPlatform() . '/views');
-
-        $finder = new FileViewFinder(app()['files'], [$viewPath, realpath(base_path('resources/views'))]);
-        \View::setFinder($finder);
-    }
-
 }
