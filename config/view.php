@@ -14,6 +14,7 @@ return [
     */
 
     'paths' => [
+        getServiceViewPath(),
         realpath(base_path('resources/views')),
     ],
 

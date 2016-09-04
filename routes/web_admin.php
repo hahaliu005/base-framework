@@ -13,20 +13,27 @@
 
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function() {
     Route::get('/', [
-        'uses' => 'IndexController@index'
+        'as' => 'index',
+        'uses' => 'IndexController@index',
     ]);
 
     Route::get('/video/upload', [
         'as' => 'video.getUpload',
         'uses' => 'VideoController@getUpload'
     ]);
-    Route::post('/video/uploading', [
-        'as' => 'video.uploading',
-        'uses' => 'VideoController@uploading'
-    ]);
     Route::post('/video/upload', [
         'as' => 'video.postUpload',
         'uses' => 'VideoController@postUpload'
+    ]);
+
+    Route::get('/video/list', [
+        'as' => 'video.list',
+        'uses' => 'VideoController@list'
+    ]);
+
+    Route::get('/video/publish', [
+        'as' => 'video.publish',
+        'uses' => 'VideoController@publish'
     ]);
 });
 

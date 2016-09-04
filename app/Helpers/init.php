@@ -30,13 +30,22 @@ function getCommonConfig()
     return $common;
 }
 
-function getPlatform()
+function getService()
 {
-    static $platform;
-    if (! $platform) {
-        $platform = getCommonConfig()['base']['service'];
+    static $service;
+    if (! $service) {
+        $service = getCommonConfig()['base']['service'];
     }
-    return $platform;
+    return $service;
+}
+
+function getServiceViewPath()
+{
+    static $serviceViewPath;
+    if (! $serviceViewPath) {
+        $serviceViewPath = getBaseDir() . '/resources/' . getService() . '/views';
+    }
+    return $serviceViewPath;
 }
 
 function appElixir($dir)
