@@ -98,13 +98,15 @@ class VideoTrans
         // 音频码率, 单位k
         $audioBitRate = 16;
         $ffmpeg = \FFMpeg\FFMpeg::create(array(
-            //'ffmpeg.binaries' => config('ffmpeg.ffmpeg'),
-            //'ffprobe.binaries' => config('ffmpeg.ffprobe'),
+            'ffmpeg.binaries' => '/usr/local/bin/ffmpeg',
+            'ffprobe.binaries' => '/usr/local/bin/ffprobe',
             'timeout' => 7200, // The timeout for the underlying process
             'ffmpeg.threads' => 8,   // The number of threads that FFMpeg should use
         ), app('log'));
 
-        $ffprobe = \FFMpeg\FFProbe::create();
+        $ffprobe = \FFMpeg\FFProbe::create([
+            'ffprobe.binaries' => '/usr/local/bin/ffprobe',
+        ]);
         $stream = $ffprobe->streams($input_file)->videos()->first();
 
         // 计算长和宽
@@ -225,10 +227,10 @@ class VideoTrans
         //$ffmpeg = FFMpeg\FFMpeg::create();
         //手动生成...
         $ffmpeg = \FFMpeg\FFMpeg::create([
-            'ffmpeg.binaries' => config('ffmpeg.ffmpeg'),
-            'ffprobe.binaries' => config('ffmpeg.ffprobe'),
-            'timeout' => config('ffmpeg.timeout'), // The timeout for the underlying process
-            'ffmpeg.threads' => config('ffmpeg.threads'),   // The number of threads that FFMpeg should use
+            'ffmpeg.binaries' => '/usr/local/bin/ffmpeg',
+            'ffprobe.binaries' => '/usr/local/bin/ffprobe',
+            'timeout' => 7200, // The timeout for the underlying process
+            'ffmpeg.threads' => 2,   // The number of threads that FFMpeg should use
         ], app('log'));
 
         $video = $ffmpeg->open($input_file);
