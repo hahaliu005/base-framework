@@ -42,6 +42,11 @@ class Video extends AppModel
     // 想要生成的截图数量
     const VIDEO_THUMB_COUNT = 8;
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'video_tag', 'video_id', 'tag_id');
+    }
+
     public static function genFileName(){
         return str_random(20);
     }
