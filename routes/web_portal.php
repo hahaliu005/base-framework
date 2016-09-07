@@ -11,6 +11,13 @@
 |
 */
 
-Route::get('/', [
-    'uses' => 'Portal\IndexController@index'
-]);
+Route::group(['namespace' => 'Portal'], function () {
+    Route::get('/', [
+        'uses' => 'IndexController@index'
+    ]);
+
+    Route::get('/video/play/{id}', [
+        'as' => 'video.play',
+        'uses' => 'VideoController@play'
+    ]);
+});

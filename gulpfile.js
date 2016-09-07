@@ -21,15 +21,15 @@ elixir(function (mix) {
 elixir(function (mix) {
     var lessDir = './resources/' + service + '/assets/less/';
     var files = fs.readdirSync(lessDir);
+    var versionFiles = [];
     for (var i = 0; i < files.length; i++) {
         var from = lessDir + files[i];
         var target = './public/css/' + files[i].replace(/less$/, 'css');
         mix.less(from, target);
-        mix.version(target);
+        versionFiles.push(target);
     }
+    mix.version(versionFiles);
 });
-
-
 
 //elixir(function (mix) {
 //    mix.webpack('**/*.js')

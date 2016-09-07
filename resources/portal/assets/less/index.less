@@ -1,0 +1,41 @@
+.video-list {
+  ul {
+    padding-left: 0px;
+    li {
+      list-style-type: none;
+      float: left;
+      margin-left: 25px;
+      width: 200px;
+      dl {
+        dt {
+          position: relative;
+          .mask-layer {
+            position: absolute;
+            bottom: 0px;
+            opacity: 0.6;
+            width: 100%;
+            overflow: hidden;
+            height: 30px;
+            background-color: #000;
+            line-height: 30px;
+            .mask-layer-left {
+              float: left;
+              width: 60%;
+              padding-left: 7px;
+            }
+            .mask-layer-right {
+              float: right;
+              padding-right: 7px;
+              width: 40%;
+              text-align: right;
+            }
+          }
+
+        }
+        dd {
+          height: 40px;
+        }
+      }
+    }
+  }
+}

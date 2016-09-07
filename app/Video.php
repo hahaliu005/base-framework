@@ -99,4 +99,51 @@ class Video extends AppModel
         }
         return $date->format('Y-m-d');
     }
+
+    public function videoHref()
+    {
+        $fileName = $this->file_name;
+        $host = env('PLAY_HOST', '127.0.0.1');
+        $port = env('PLAY_PORT', '80');
+        $portStr = $port == 80 ? '' : ':' . $port;
+
+        if (strpos($fileName, 'test') === 0) {
+            return 'http://' . $host . $portStr . '/' . $fileName . self::VIDEO_ND_SUFFIX;
+        } else {
+            return 'http://' . $host . $portStr . '/' . $this->dateFormat($this->created_at) . '/' . $fileName . self::VIDEO_ND_SUFFIX;
+        }
+    }
+
+    public function thumbHref()
+    {
+        $host = env('IMG_HOST', '127.0.0.1');
+        $port = env('IMG_PORT', '80');
+        $portStr = $port == 80 ? '' : ':' . $port;
+
+        if (strpos($this->file_name, 'test') === 0) {
+            $name = $this->file_name . self::VIDEO_THUMB_SUFFIX . random_int(1, self::VIDEO_THUMB_COUNT) . self::VIDEO_THUMB_EXTENSION;
+            return 'http://' . $host . $portStr . '/thumb/' . '/' . $name;
+        } else {
+            $name = $this->file_name . self::VIDEO_THUMB_SUFFIX . random_int(1, self::VIDEO_THUMB_COUNT) . self::VIDEO_THUMB_EXTENSION;
+            return 'http://' . $host . $portStr . '/thumb/' . self::dateFormat($this->created_at) . '/' . $name;
+        }
+    }
+
+
+    // 将秒数转换为00:00:00的格式
+    public function durationReadable()
+    {
+        $seconds = $this->duration;
+        $hours = (int)($seconds / 3600);
+        $rest = $seconds % 3600;
+        $minutes = (int)($rest / 60);
+        $seconds = $rest % 60;
+
+        return sprintf("%d:%02d:%02d", $hours, $minutes, $seconds);
+    }
+
+    public function releaseReadable()
+    {
+        return $this->released_at->diffForHumans(\Carbon\Carbon::now());
+    }
 }
